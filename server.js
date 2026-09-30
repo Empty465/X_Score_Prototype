@@ -11,6 +11,7 @@ const publicFiles = new Map([
   ['/index.html', ['index.html', 'text/html; charset=utf-8']],
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
+  ['/games/index.js', ['games/index.js', 'text/javascript; charset=utf-8']],
   ['/node_modules/matter-js/build/matter.min.js', ['node_modules/matter-js/build/matter.min.js', 'text/javascript; charset=utf-8']]
 ]);
 
@@ -179,7 +180,10 @@ const server = http.createServer(async (request, response) => {
   }
 
   const pathname = url.pathname === '/' ? '/index.html' : url.pathname;
-  const asset = publicFiles.get(pathname);
+  const gameModule = pathname.match(/^\/games\/([a-z0-9-]+)\.js$/);
+  const asset = publicFiles.get(pathname) || (gameModule
+    ? [`games/${gameModule[1]}.js`, 'text/javascript; charset=utf-8']
+    : null);
   if (!asset) {
     response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     response.end('Not found');
