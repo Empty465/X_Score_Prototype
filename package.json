@@ -1,0 +1,14 @@
+{
+  "name": "playground-mini-games",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "matter-js": "^0.20.0"
+  }
+}
